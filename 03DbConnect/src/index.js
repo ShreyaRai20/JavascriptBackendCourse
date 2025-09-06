@@ -33,7 +33,13 @@ const { DB_NAME } = require('./constants')
 
 
 connectDB()
-
-app.listen(process.env.PORT, () => {
+.then(() => {
+    app.listen(process.env.PORT || 8000, () => {
     console.log("listening from port: ",process.env.PORT )
 })
+})
+.catch((err) => console.log("connection to db failed ", err))
+
+
+
+// use app.use() when using middleware / configurations settings
