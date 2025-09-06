@@ -1,3 +1,3 @@
 const DB_NAME = "videoapp"
 
-module.exports = DB_NAME
+module.exports = { DB_NAME }

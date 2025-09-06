@@ -30,4 +30,6 @@ module.exports = app
 
 // middleware =>
 
-// 
+// 200 =>
+// 400 => bad request
+// 500 => internal server error

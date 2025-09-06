@@ -54,7 +54,7 @@ const userSchema = new mongoose.Schema(
 userSchema.pre("save", async function (next) {
     if(!this.isModified('password')) return
 
-    this.password =  bcrypt.hash(this.password, 10)
+    this.password = await bcrypt.hash(this.password, 10)
     next()
 
 })  // dont use arrow function here "this" wont be accessible
@@ -92,7 +92,8 @@ Token = async function () {
     )    
 }
 
-export const User = mongoose.model('User', userSchema )
+const User = mongoose.model('User', userSchema )
 
+module.exports = { User }
 
 // jwt - bearer token, whoever bear the token will give access to data
