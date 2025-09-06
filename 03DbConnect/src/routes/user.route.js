@@ -1,5 +1,5 @@
 const express = require ('express')
-const {registerUser, loginUser} = require('../controllers/user.controller.js')
+const {registerUser, loginUser, logoutUser, refreshAccessToken} = require('../controllers/user.controller.js')
 const {upload} = require('../middleware/multer.middleware.js')
 const { verifyJWT } = require('../middleware/auth.middleware.js')
 
@@ -23,6 +23,10 @@ userRouter.route("/login").post(loginUser)
 
 // secured routes =>
 
-userRouter.route("/logout").post(verifyJWT, loginUser)
+userRouter.route("/logout").post(verifyJWT, logoutUser)
+
+
+userRouter.route("/refresh-token").post(refreshAccessToken)
+
 
 module.exports = userRouter
