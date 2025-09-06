@@ -16,6 +16,11 @@ app.use(express.static("public"))
 
 app.use(cookieParser())
 
+//router
+const userRouter = require('./routes/user.route.js')
+
+app.use("/api/v1/users", userRouter)
+
 module.exports = app
 
 // check cors definitely!!!
