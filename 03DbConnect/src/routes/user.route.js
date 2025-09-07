@@ -28,7 +28,7 @@ userRouter.route("/logout").post(verifyJWT, logoutUser)
 
 userRouter.route("/refresh-token").post(refreshAccessToken)
 
-userRouter.route("/change-password").post(changeCurrentPassword)
+userRouter.route("/change-password").post(verifyJWT,changeCurrentPassword)
 
 userRouter.route("/current-user").get(verifyJWT,getCurrentUser)
 
