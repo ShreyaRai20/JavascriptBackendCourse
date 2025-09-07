@@ -418,7 +418,7 @@ const updateCoverImage = asyncHandler(
 )
 
 const getUserChannelProfile = asyncHandler(
-    async (res,req) => {
+    async (req,res) => {
         const {username} = req.params
 
         if(!username?.trim()){
@@ -442,19 +442,19 @@ const getUserChannelProfile = asyncHandler(
             },
             {
                 $lookup: {
-                    from: "subcriptions",
+                    from: "subscriptions",
                     localField: "_id",
                     foreignField: "subscriber",
-                    as: "subsdribedTo"
+                    as: "subscribedTo"
                 }
             },
             {
                 $addFields: {
                     subscribersCount: {
-                        $size: "subscribers"
+                        $size: "$subscribers"
                     },
                     channelSubscribedToCount: {
-                        $size: "subsdribedTo"
+                        $size: "$subscribedTo"
                     },
                     isSubscribed: {
                         $cond: {
@@ -466,7 +466,7 @@ const getUserChannelProfile = asyncHandler(
                 }
             },
             {
-                project: {
+                $project: {
                     fullName: 1,
                     username: 1,
                     subscribersCount: 1,
