@@ -1,7 +1,7 @@
 const express = require ('express')
 const {registerUser, loginUser, logoutUser, refreshAccessToken, changeCurrentPassword, getCurrentUser, updateAccountDetails, updateAvatar, updateCoverImage, getUserChannelProfile, getWatchHistory} = require('../controllers/user.controller.js')
-const {upload} = require('../middleware/multer.middleware.js')
-const { verifyJWT } = require('../middleware/auth.middleware.js')
+const {upload} = require('../middlewares/multer.middleware.js')
+const { verifyJWT } = require('../middlewares/auth.middleware.js')
 
 const userRouter = express.Router()
 

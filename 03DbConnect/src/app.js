@@ -18,8 +18,12 @@ app.use(cookieParser())
 
 //router
 const userRouter = require('./routes/user.route.js')
+const commentRouter = require('./routes/comment.route.js')
 
 app.use("/api/v1/users", userRouter)
+
+
+app.use("/api/v1/comments", commentRouter)
 
 module.exports = app
 
