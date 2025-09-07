@@ -30,6 +30,28 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
 }
 
+const deleteOnCloudinary = async (fileUrl) => {
+    try{
+        if(!fileUrl) return null
 
-module.exports = {uploadOnCloudinary}
+        filenamePath = fileUrl.split('/')
+        filename = filenamePath[filenamePath.length-1]
+
+        console.log(filename.split('.')[0])
+
+        //file upload
+        const res = await cloudinary.uploader.destroy(filename.split('.')[0],
+        { resource_type: 'video' })
+        
+        return res
+    } catch (err){
+         // remove the locally saved temperory file as the upload got failed
+        return null
+    }
+}
+
+module.exports = {
+    uploadOnCloudinary,
+    deleteOnCloudinary
+}
 

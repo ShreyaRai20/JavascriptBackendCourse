@@ -23,7 +23,6 @@ const verifyJWT = asyncHandler(
             }
             console.log(user)
             req.user = user;
-            console.log(req.user)
             next()
         } catch (error) {
             throw new ApiError(401, "invalid!!!")

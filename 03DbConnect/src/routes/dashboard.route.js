@@ -12,6 +12,4 @@ dashboardRouter.use(verifyJWT); // Apply verifyJWT middleware to all routes in t
 dashboardRouter.route("/stats").get(getChannelStats);
 dashboardRouter.route("/videos").get(getChannelVideos);
 
-module.exports = {
-    dashboardRouter:dashboardRouter
-}
+module.exports = dashboardRouter

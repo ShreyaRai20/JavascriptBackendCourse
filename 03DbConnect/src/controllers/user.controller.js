@@ -96,7 +96,7 @@ const registerUser = asyncHandler(
             }
         )
 
-        // checking if user created and remove passweord and refresh token field from response
+        // checking if user created and remove password and refresh token field from response
 
         const createdUser = await User.findById(user._id).select(
             "-password -refreshToken"

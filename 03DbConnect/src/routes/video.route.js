@@ -1,19 +1,21 @@
-import { Router } from 'express';
-import {
+const { Router } = require('express');
+const  {
     deleteVideo,
     getAllVideos,
     getVideoById,
     publishAVideo,
     togglePublishStatus,
     updateVideo,
-} from "../controllers/video.controller.js"
-import {verifyJWT} from "../middlewares/auth.middleware.js"
-import {upload} from "../middlewares/multer.middleware.js"
+} = require("../controllers/video.controller.js")
+const {verifyJWT} = require("../middlewares/auth.middleware.js")
+const  {upload} = require("../middlewares/multer.middleware.js")
 
-const router = Router();
-router.use(verifyJWT); // Apply verifyJWT middleware to all routes in this file
+const videoRouter = Router();
 
-router
+videoRouter.use(verifyJWT); // Apply verifyJWT middleware to all routes in this file
+
+// upload file
+videoRouter
     .route("/")
     .get(getAllVideos)
     .post(
@@ -31,12 +33,12 @@ router
         publishAVideo
     );
 
-router
+videoRouter
     .route("/:videoId")
     .get(getVideoById)
     .delete(deleteVideo)
     .patch(upload.single("thumbnail"), updateVideo);
 
-router.route("/toggle/publish/:videoId").patch(togglePublishStatus);
+videoRouter.route("/toggle/publish/:videoId").patch(togglePublishStatus);
 
-export default router
+module.exports =  videoRouter
