@@ -1,16 +1,58 @@
+// src/App.js
 
-import './App.css'
-import Login from './components/Login'
-import Register from './components/Register'
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import PrivateRoute from "./components/PrivateRoutes";
+import { logoutUser } from "./features/auth/authSlice";
 
-function App() {
+const Dashboard = () => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   return (
-    <>
-      <Register />
-      <Login />
-    </>
-  )
-}
+    <div>
+      <h1>Welcome, {user?.fullName || "User"} 🎉</h1>
+      <button onClick={() => dispatch(logoutUser())}>Logout</button>
+    </div>
+  );
+};
 
-export default App
+const App = () => {
+  const { accessToken } = useSelector((state) => state.auth);
+
+  return (
+    <Router>
+      <nav style={{ marginBottom: "20px" }}>
+        <Link to="/login" style={{ margin: "0 10px" }}>
+          Login
+        </Link>
+        <Link to="/register" style={{ margin: "0 10px" }}>
+          Register
+        </Link>
+        {accessToken && (
+          <Link to="/dashboard" style={{ margin: "0 10px" }}>
+            Dashboard
+          </Link>
+        )}
+      </nav>
+
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<Login />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default App;
