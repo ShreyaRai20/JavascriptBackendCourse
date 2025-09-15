@@ -21,7 +21,6 @@ const verifyJWT = asyncHandler(
                 // discuss in frontend
                 throw new ApiError(401, "invalid access token")
             }
-            console.log(user)
             req.user = user;
             next()
         } catch (error) {

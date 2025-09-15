@@ -11,10 +11,10 @@ subscriptionRouter.use(verifyJWT); // Apply verifyJWT middleware to all routes i
 
 subscriptionRouter
     .route("/c/:channelId")
-    .get(getSubscribedChannels)
-    .post(toggleSubscription);
+    .post(toggleSubscription)
+    .get(getUserChannelSubscribers);
 
 subscriptionRouter.route("/u/:subscriberId")
-.get(getUserChannelSubscribers);
+.get(getSubscribedChannels)
 
 module.exports = subscriptionRouter
