@@ -20,6 +20,7 @@ app.use(cookieParser())
 const userRouter = require('./routes/user.route.js')
 const commentRouter = require('./routes/comment.route.js')
 const videoRouter  = require('./routes/video.route.js')
+const likeRouter = require('./routes/like.route.js')
 
 app.use("/api/v1/users", userRouter)
 
@@ -27,6 +28,10 @@ app.use("/api/v1/users", userRouter)
 // app.use("/api/v1/comments", commentRouter)
 
 app.use("/api/v1/videos", videoRouter)
+
+app.use("/api/v1/likes", likeRouter)
+
+app.use("/api/v1/comments", commentRouter)
 
 
 module.exports = app

@@ -51,6 +51,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/auth/authSlice";
+import Counter from "./Counter";
 
 const Login = () => {
     const dispatch = useDispatch();
@@ -69,6 +70,7 @@ const Login = () => {
 
     return (
         <form onSubmit={handleSubmit}>
+            <Counter />
             <h2>Login</h2>
             {error && <p style={{ color: "red" }}>{error}</p>}
             <input

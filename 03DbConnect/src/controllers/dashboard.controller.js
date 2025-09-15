@@ -6,7 +6,7 @@ const {ApiError} = require("../utils/ApiError.js")
 const {ApiResponse} = require( "../utils/ApiResponse.js")
 const {asyncHandler} = require("../utils/asyncHandler.js")
 
-const getChannelStats = asyncHandler(async (req, res) => {
+const getChannelStatus = asyncHandler(async (req, res) => {
     // TODO: Get the channel stats like total video views, total subscribers, total videos, total likes etc.
 })
 
@@ -15,6 +15,6 @@ const getChannelVideos = asyncHandler(async (req, res) => {
 })
 
 module.exports =  {
-    getChannelStats, 
+    getChannelStatus, 
     getChannelVideos
     }

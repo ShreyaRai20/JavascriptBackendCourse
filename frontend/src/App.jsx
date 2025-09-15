@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import PrivateRoute from "./components/PrivateRoutes";
 import { logoutUser } from "./features/auth/authSlice";
+import Counter from "./components/Counter";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const Dashboard = () => {
   return (
     <div>
       <h1>Welcome, {user?.fullName || "User"} 🎉</h1>
+      <Counter />
       <button onClick={() => dispatch(logoutUser())}>Logout</button>
     </div>
   );
