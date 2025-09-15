@@ -58,9 +58,43 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
     const {channelId} = req.params
 
 
-    const subscribers = await Subscription.find({
-        channel:channelId
-    })
+    // const subscribers = await Subscription.find({
+    //     channel:channelId
+    // })
+
+    const subscribers = await Subscription.aggregate([
+        {
+            $match:{
+                channel:new mongoose.Types.ObjectId(channelId)
+            }
+        },
+        {
+            $lookup:{
+                from:"users",
+                localField:"subscriber",
+                foreignField: "_id",
+                as: "subscriber",
+                pipeline:[
+                    {
+                        $project:{
+                            username:1,
+                            fullName:1,
+                            avatar:1
+                        }
+                    },
+                ]
+            },
+        },
+            {
+            $addFields: {
+                subscriber: {
+                    $first: "$subscriber"
+                }
+            }
+        }
+    ])
+
+    console.log(subscribers)
 
     return res
     .status(200)
@@ -68,7 +102,7 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
         new ApiResponse(
             200,
             subscribers,
-            "fetched all channels to which the user has subscribed"
+            "fetched all subcribers of the channel"
         )
     )
 
@@ -79,10 +113,31 @@ const getUserChannelSubscribers = asyncHandler(async (req, res) => {
 const getSubscribedChannels = asyncHandler(async (req, res) => {
     const {subscriberId } = req.params
 
-    const channels = await Subscription.find({
-        subscriber:subscriberId
-    })
-
+    const channels = await Subscription.aggregate([
+        {
+            $match:{
+                subscriber: new mongoose.Types.ObjectId(subscriberId)
+            }
+        },
+        {
+            $lookup:{
+                from:"users",
+                localField:"channel",
+                foreignField: "_id",
+                as: "channel",
+                pipeline: [
+                    {
+                        $project:{
+                            username:1,
+                            fullName:1,
+                            avatar:1
+                        }
+                    }
+                ]
+            }
+        
+    },
+    ])
 
     return res
     .status(200)

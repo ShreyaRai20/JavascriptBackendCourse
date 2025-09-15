@@ -23,6 +23,7 @@ const videoRouter  = require('./routes/video.route.js')
 const likeRouter = require('./routes/like.route.js')
 const tweetRouter = require('./routes/tweet.route.js')
 const subscriptionRouter = require('./routes/subscription.route.js')
+const dashboardRouter = require('./routes/dashboard.route.js')
 
 app.use("/api/v1/users", userRouter)
 
@@ -39,6 +40,7 @@ app.use("/api/v1/tweets", tweetRouter)
 
 app.use("/api/v1/subscriptions", subscriptionRouter)
 
+app.use("/api/v1/dashboard", dashboardRouter)
 
 module.exports = app
 
