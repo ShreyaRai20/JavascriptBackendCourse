@@ -166,8 +166,10 @@ const loginUser = asyncHandler(
 
         const options = {
             httpOnly: true, // only changable by server not frontend
-            secure: true
+            secure: false
         }
+
+        console.log(accessToken, refreshToken )
 
         return res
         .status(200)

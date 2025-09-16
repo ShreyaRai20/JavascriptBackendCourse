@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { redirect, useNavigate } from 'react-router-dom'
+import api from '../api.js'
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../constants.js'
 
 function Login() {
 
@@ -10,15 +11,12 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const res = await axios.post('http://localhost:3000/api/v1/users/login', { username: username, password: password })
+        const res = await api.post('http://localhost:3000/api/v1/users/login', { username: username, password: password })
 
-        console.log(res.data)
 
         if (res.data.success) {
-            console.log(res.data.success)
-            navigate('/dashboard', { replace: true });
 
-            redirect('/dashboard')
+            navigate('/', { replace: true });
         } else {
             alert("login failed")
         }

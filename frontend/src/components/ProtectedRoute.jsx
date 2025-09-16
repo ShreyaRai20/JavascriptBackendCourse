@@ -1,12 +1,25 @@
 import { Navigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import api from '../api.js'
 
-export default function ProtectedRoute({ children }) {
-    const token = localStorage.getItem('accessToken')
+function ProtectedRoute({ children }) {
+    const [isAuthorized, setIsAuthorized] = useState(null)
 
-    if (!token) {
-        return <Navigate to='login' replace />
-    }
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                await api.get('api/v1/users/current-user') // backend validates accessToken cookie
+                setIsAuthorized(true)
+            } catch (err) {
+                setIsAuthorized(false)
+            }
+        }
+        checkAuth()
+    }, [])
 
-    return children
+    if (isAuthorized === null) return <div>Loading...</div>
 
+    return isAuthorized ? children : <Navigate to="/login" />
 }
+
+export default ProtectedRoute
