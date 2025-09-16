@@ -1,11 +1,11 @@
 import React from 'react'
 
-function Register() {
+function Dashboard() {
     return (
         <div>
-
+            Dashboard
         </div>
     )
 }
 
-export default Register
+export default Dashboard

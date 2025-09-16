@@ -162,10 +162,10 @@ const loginUser = asyncHandler(
 
         const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id)
 
-        const loggedInUser = await User.findById(user._id).select("-passwrod -refreshToken")
+        const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
 
         const options = {
-            httpOnly: true, // only changable by serve rnot frontend
+            httpOnly: true, // only changable by server not frontend
             secure: true
         }
 

@@ -1,97 +1,37 @@
-// import axios from 'axios'
-// import { useRef } from 'react'
-// import Register from './Register'
-// import { Link, useHistory } from 'react-router-dom'
-// import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
+import axios from 'axios'
+import { redirect, useNavigate } from 'react-router-dom'
 
-// function Login() {
-//     const dispatch = useDispatch()
-//     const history = useHistory()
-//     const usernameRef = useRef()
-//     const passwordRef = useRef()
+function Login() {
 
+    const [username, setUsername] = useState()
+    const [password, setPassword] = useState()
+    const navigate = useNavigate()
 
-//     const handleSubmit = async (e) => {
-//         e.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const res = await axios.post('http://localhost:3000/api/v1/users/login', { username: username, password: password })
 
-//         try {
-//             const saveUserThunk = saveUser(usernameRef.current.value, passwordRef.current.value)
-//             dispatch(saveUserThunk)
-//             history.push('/')
+        console.log(res.data)
 
-//             // const res = await axios.post(
-//             //     'http://localhost:3000/api/v1/users/login',
-//             //     {
-//             //         username: usernameRef.current.value,
-//             //         password: passwordRef.current.value
-//             //     }
-//             // )
-//             // console.log(res.data)
+        if (res.data.success) {
+            console.log(res.data.success)
+            navigate('/dashboard', { replace: true });
 
-//         } catch (error) {
-//             console.log(error)
-//         }
+            redirect('/dashboard')
+        } else {
+            alert("login failed")
+        }
 
-//     }
-//     return (
-
-//         <form onSubmit={(e) => handleSubmit(e)}>
-//             <Link to="/register">Register</Link>
-//             <input id="username" type='text' ref={usernameRef} />
-//             <input id="password" type='text' ref={passwordRef} />
-//             <button />
-//         </form>
-//     )
-// }
-
-// export default Login
-
-
-// src/features/auth/Login.js
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../features/auth/authSlice";
-import Counter from "./Counter";
-
-const Login = () => {
-    const dispatch = useDispatch();
-    const { loading, error } = useSelector((state) => state.auth);
-
-    const [form, setForm] = useState({ username: "", password: "" });
-
-    const handleChange = (e) =>
-        setForm({ ...form, [e.target.name]: e.target.value });
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(form)
-        dispatch(loginUser(form));
-    };
+    }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Counter />
-            <h2>Login</h2>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={form.username}
-                onChange={handleChange}
-            />
-            <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={form.password}
-                onChange={handleChange}
-            />
-            <button type="submit" disabled={loading}>
-                {loading ? "Logging in..." : "Login"}
-            </button>
+        <form onSubmit={(e) => handleSubmit(e)}>
+            <input type='text' placeholder='write username' name='username' onChange={(e) => setUsername(e.target.value)} />
+            <input type='password' placeholder='write password' name='password' onChange={(e) => setPassword(e.target.value)} />
+            <button>Login</button>
         </form>
-    );
-};
+    )
+}
 
-export default Login;
+export default Login
